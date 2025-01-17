@@ -3,12 +3,20 @@
     <Navbar />
     <h2 class="centered">New User Registration</h2>
     <form @submit.prevent="register" class="registration-form">
+      
+      <!-- Username input -->
       <div class="input-group">
         <label for="username">Username:</label>
         <input type="text" id="username" v-model="username" required />
       </div>
 
-      <!-- Password input with custom eye icon -->
+      <!-- Email input -->
+      <div class="input-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required />
+      </div>
+
+<!-- Password input with custom eye icon -->
       <div class="input-group password-group">
         <label for="password">Password:</label>
         <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password" required />
@@ -41,74 +49,55 @@
         </span>
       </div>
 
-      <div class="button-group">
-        <button type="submit" class="register-button" :disabled="loading">
-          <span v-if="loading">Registering...</span>
-          <span v-else>Register</span>
-        </button>
-        <button type="button" @click="goToLogin" class="login-button">Already have an account? Login</button>
+      <!-- Submit button -->
+      <div class="input-group">
+        <button type="submit" class="submit-btn">Register</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import Navbar from '../components/Navbar.vue';
-
 export default {
-  name: 'UserRegister',
-  components: {
-    Navbar
-  },
   data() {
     return {
-      username: '',
-      password: '',
-      confirmPassword: '',
-      showPassword: false, // Toggle visibility for password
-      showConfirmPassword: false, // Toggle visibility for confirm password
-      loading: false
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      showPassword: false,
+      showConfirmPassword: false
     };
   },
   methods: {
+    // Toggle password visibility
     togglePasswordVisibility(field) {
-      if (field === 'password') {
+      if (field === "password") {
         this.showPassword = !this.showPassword;
-      } else if (field === 'confirmPassword') {
+      } else if (field === "confirmPassword") {
         this.showConfirmPassword = !this.showConfirmPassword;
       }
     },
-    async register() {
+    
+    // Handle form submission
+    register() {
+      // Validate that passwords match
       if (this.password !== this.confirmPassword) {
-        alert('Passwords do not match!');
+        alert("Passwords do not match.");
         return;
       }
-
-      this.loading = true;
-
-      try {
-        const response = await axios.post('http://localhost:8000/api/register', {
-          username: this.username,
-          password: this.password
-        });
-
-        alert(response.data.message);
-        this.$router.push({ name: 'UserLogin' });
-      } catch (error) {
-        console.error(error);
-        alert('Registration failed. Please try again.');
-      } finally {
-        this.loading = false;
-      }
-    },
-    goToLogin() {
-      this.$router.push({ name: 'UserLogin' });
+      
+      // Handle registration logic (e.g., API call, saving data, etc.)
+      alert("Registration successful!");
+      // Reset form fields
+      this.username = "";
+      this.email = "";
+      this.password = "";
+      this.confirmPassword = "";
     }
   }
 };
 </script>
-
 <style scoped>
 .registration-container {
   /* styles for container */

@@ -12,8 +12,8 @@
       <div class="users-container">
         <h3>Manage Users</h3>
         <div class="buttons-container">
-          <button @click="navigateToAddUser" class="add-user-btn">Add New User</button>
-          <button @click="navigateToStats" class="stats-btn">Stats</button>
+          <button @click="navigateToAddUser" class="add-user-btn">Customer Information</button>
+          <button @click="navigateToStats" class="stats-btn">Dashboard</button>
         </div>
         <ul>
           <li v-for="user in users" :key="user.id">
